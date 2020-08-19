@@ -73,6 +73,7 @@ func (f *FastHttp) Exec(aw *base.AWResult) {
 	req.SetRequestURI(aw.AW.Req.Url)
 	for key, value := range aw.AW.Req.Header {
 		req.Header.Set(key, value)
+		aw.AW.Req.HeaderLen += len(key) + len(value) + 4
 	}
 	if len(req.Header.ContentType()) == 0 {
 		req.Header.SetContentType(DefaultContentTypeValue)
