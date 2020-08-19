@@ -8,15 +8,26 @@ package base
 
 // 协议
 const (
-	Http = "HTTP"
-	Tcp  = "TCP"
-	Udp  = "UDP"
+	Http Protocol = "HTTP"
+	Tcp  Protocol = "TCP"
+	Udp  Protocol = "UDP"
 )
+
+// 已经实现的协议池
+var Clients = make(map[Protocol]Client)
+
+type Protocol string
+
+func Register(pt Protocol, c Client) {
+	Clients[pt] = c
+}
+
+//协议
 
 type BaseCase struct { // 底层结构
 	PodId    int
 	PodCount int
-	Clients  map[string]Client
+	Clients  map[Protocol]Client
 }
 
 // 协议接口

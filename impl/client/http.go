@@ -48,6 +48,10 @@ var (
 		DisableHeaderNamesNormalizing: true}
 )
 
+func init() {
+	base.Register(base.Http, new(FastHttp))
+}
+
 type FastHttp struct {
 	base.Logger
 }

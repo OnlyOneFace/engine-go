@@ -6,11 +6,23 @@
 // Package engine_go 
 package main
 
-import "engine-go/base"
+import (
+	"engine-go/base"
+	"engine-go/impl/logger"
+)
 
 func main() {
 	cn := NewCaseName()
-	var basins = &base.BaseCase{}
+	// 日志设置
+	for _, value := range base.Clients {
+		value.SetLogger(logger.NewZapLogger("Info", false))
+	}
+	// basecase生成
+	var basins = &base.BaseCase{
+		PodId:    0,
+		PodCount: 0,
+		Clients:  base.Clients,
+	}
 	cn.SetBase(basins)
 
 	cn.Setup()
