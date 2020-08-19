@@ -8,11 +8,14 @@ package impl
 
 import (
 	"crypto/tls"
+	"net"
+	"net/http"
+	"time"
+
+	"github.com/valyala/fasthttp"
+
 	"engine-go/base"
 	"engine-go/util"
-	"github.com/valyala/fasthttp"
-	"net"
-	"time"
 )
 
 //插件最终包含的是base
@@ -20,6 +23,8 @@ import (
 const (
 	DefaultContentTypeKey   = fasthttp.HeaderContentType
 	DefaultContentTypeValue = "application/json;charset=utf-8"
+
+	maxRedirectsCount = 3
 )
 
 var (
@@ -75,17 +80,25 @@ func (f *FastHttp) Exec(aw *base.AWResult) {
 	}
 	req.SetBodyString(aw.AW.Req.Body)
 	var err error
-	if aw.AW.Req.TimeOut.Connect != 0 {
-		err = fastHttpClient.DoTimeout(req, res, time.Duration(aw.AW.Req.TimeOut.Connect))
-	} else {
-		err = fastHttpClient.Do(req, res)
-	}
-	if err != nil {
+	if err = DoRequest(req, res, aw); err != nil {
 		aw.Res.ErrReason = err.Error()
 		return
 	}
-	// 开启重定向
-
+	if aw.Req.RedirectsEnabled { // 开启重定向
+		redirectsCount := 0
+		for res.StatusCode() == http.StatusFound {
+			redirectsCount++
+			if redirectsCount > maxRedirectsCount {
+				aw.AW.Res.ErrReason = http.StatusText(http.StatusTooManyRequests)
+				return
+			}
+			req.URI().UpdateBytes(res.Header.Peek("Location"))
+			if err = DoRequest(req, res, aw); err != nil {
+				aw.Res.ErrReason = err.Error()
+				return
+			}
+		}
+	}
 	//
 	aw.Result = true
 	aw.AW.Res.StatusCode = res.StatusCode()
@@ -98,5 +111,13 @@ func (f *FastHttp) Exec(aw *base.AWResult) {
 		aw.AW.Res.HeaderLen += len(key) + len(value) + 4
 	})
 	aw.AW.Res.Body = util.ByteToString(res.Body())
+}
 
+func DoRequest(req *fasthttp.Request, resp *fasthttp.Response, aw *base.AWResult) (err error) {
+	if aw.AW.Req.TimeOut.Connect != 0 {
+		err = fastHttpClient.DoTimeout(req, resp, time.Duration(aw.AW.Req.TimeOut.Connect))
+	} else {
+		err = fastHttpClient.Do(req, resp)
+	}
+	return err
 }

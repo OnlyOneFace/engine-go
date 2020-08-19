@@ -25,11 +25,12 @@ var aWResultPool = sync.Pool{New: func() interface{} {
 		LogInfo:       make([]interface{}, 0, HeaderDefaultLength),
 		AW: AW{
 			Req: Request{
-				Method:    "",
-				Url:       "",
-				Header:    make(map[string]string, HeaderDefaultLength),
-				HeaderLen: 0,
-				Body:      "",
+				Method:           "",
+				Url:              "",
+				Header:           make(map[string]string, HeaderDefaultLength),
+				HeaderLen:        0,
+				Body:             "",
+				RedirectsEnabled: false,
 				TimeOut: TimeOut{
 					Connect: 0,
 					Write:   0,
@@ -67,11 +68,12 @@ func NewAWResult() *AWResult {
 		LogInfo:       make([]interface{}, 0, HeaderDefaultLength),
 		AW: AW{
 			Req: Request{
-				Method:    "",
-				Url:       "",
-				Header:    make(map[string]string, HeaderDefaultLength),
-				HeaderLen: 0,
-				Body:      "",
+				Method:           "",
+				Url:              "",
+				Header:           make(map[string]string, HeaderDefaultLength),
+				HeaderLen:        0,
+				Body:             "",
+				RedirectsEnabled: false,
 				TimeOut: TimeOut{
 					Connect: 0,
 					Write:   0,
@@ -108,6 +110,7 @@ func (aw *AWResult) Release() {
 	aw.AW.Req.Header = make(map[string]string, HeaderDefaultLength)
 	aw.AW.Req.HeaderLen = 0
 	aw.AW.Req.Body = ""
+	aw.AW.Req.RedirectsEnabled = false
 	aw.AW.Req.TimeOut.Read = 0
 	aw.AW.Req.TimeOut.Write = 0
 	aw.AW.Req.TimeOut.Connect = 0
@@ -142,11 +145,12 @@ type AW struct {
 }
 
 type Request struct {
-	Method    string
-	Url       string
-	Header    map[string]string
-	HeaderLen int
-	Body      string
+	Method           string
+	Url              string
+	Header           map[string]string
+	HeaderLen        int
+	Body             string
+	RedirectsEnabled bool
 	TimeOut
 	End
 }
