@@ -7,10 +7,11 @@
 package logger
 
 import (
-	"github.com/sirupsen/logrus"
 	"io"
 	"os"
 	"strings"
+
+	"github.com/sirupsen/logrus"
 )
 
 func NewRus(level string, format logrus.Formatter, w io.Writer, fields logrus.Fields) *logrus.Entry {

@@ -6,9 +6,7 @@
 // Package logger 
 package logger
 
-import (
-	"github.com/sirupsen/logrus"
-)
+import "github.com/sirupsen/logrus"
 
 func NewRusLogger(level string, enableDebugLog bool) *RusLogger {
 	return &RusLogger{NewRus(
