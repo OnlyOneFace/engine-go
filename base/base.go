@@ -6,13 +6,22 @@
 // Package base 
 package base
 
+// 协议
+const (
+	Http = "HTTP"
+	Tcp  = "TCP"
+	Udp  = "UDP"
+)
+
 type BaseCase struct { // 底层结构
-	Logger
-	Client
+	PodId    int
+	PodCount int
+	Clients  map[string]Client
 }
 
 // 协议接口
 type Client interface {
+	SetLogger(Logger)
 	Exec(*AWResult)
 }
 
@@ -26,42 +35,4 @@ type Logger interface {
 	Errorf(format string, v ...interface{})
 }
 
-// 请求响应
-type AWResult struct {
-	Id       string
-	Name     string
-	Result   bool
-	ReqBegin int64
-	RespTime int64
-	AW
-	LogInfo       []string
-	TransactionId string
-}
 
-type AW struct {
-	Req Request
-	res Response
-}
-
-type Request struct {
-	Method    string
-	Url       string
-	Header    map[string]string
-	HeaderLen int
-	Body      []byte
-}
-
-type Response struct {
-	Header     map[string]string
-	HeaderLen  int
-	Body       []byte
-	ErrReason  string
-	StatusCode int
-	End
-}
-
-type End struct {
-	Type   uint8
-	Length int
-	Char   string
-}
