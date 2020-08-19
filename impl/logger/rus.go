@@ -14,15 +14,17 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func NewRus(level string, format logrus.Formatter, w io.Writer, fields logrus.Fields) *logrus.Entry {
-	return (&logrus.Logger{
+func NewRus(level string, format logrus.Formatter, w io.Writer, fields logrus.Fields) *logrus.Logger {
+	l := &logrus.Logger{
 		Out:          w,
 		Hooks:        make(logrus.LevelHooks),
 		Formatter:    format,
 		ReportCaller: true,
 		Level:        getLevel(level),
 		ExitFunc:     os.Exit,
-	}).WithFields(fields)
+	}
+	l.WithFields(fields)
+	return l
 }
 
 func getLevel(level string) logrus.Level {

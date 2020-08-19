@@ -11,23 +11,25 @@ import "github.com/sirupsen/logrus"
 func NewRusLogger(level string, enableDebugLog bool) *RusLogger {
 	return &RusLogger{NewRus(
 		level,
-		&logrus.TextFormatter{},
+		&logrus.TextFormatter{
+			TimestampFormat: "2006-01-02 15:04:05",
+		},
 		SetWriter(enableDebugLog),
 		map[string]interface{}{})}
 }
 
 type RusLogger struct {
-	*logrus.Entry
+	*logrus.Logger
 }
 
 func (r *RusLogger) Debug(format string) {
-	r.Entry.Debug(format)
+	r.Logger.Debug(format)
 }
 
 func (r *RusLogger) Info(format string) {
-	r.Entry.Info(format)
+	r.Logger.Info(format)
 }
 
 func (r *RusLogger) Error(format string) {
-	r.Entry.Error(format)
+	r.Logger.Error(format)
 }

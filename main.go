@@ -14,11 +14,10 @@ import (
 
 func main() {
 	client.Register()
-
 	cn := NewCaseName()
 	// 日志设置
 	for _, value := range base.Clients {
-		value.SetLogger(logger.NewZapLogger("Info", false))
+		value.SetLogger(logger.NewZapLogger("Info", true))
 	}
 	// basecase生成
 	var basins = &base.BaseCase{
