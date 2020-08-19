@@ -8,6 +8,7 @@ package client
 
 import (
 	"crypto/tls"
+	"log"
 	"net"
 	"net/http"
 	"time"
@@ -15,6 +16,7 @@ import (
 	"github.com/valyala/fasthttp"
 
 	"engine-go/base"
+	"engine-go/impl/logger"
 	"engine-go/util"
 )
 
@@ -49,7 +51,10 @@ var (
 )
 
 func init() {
-	base.Register(base.Http, new(FastHttp))
+	base.Register(base.Http, &FastHttp{
+		Logger: logger.NewZapLogger("DEBUG", true),
+	})
+	log.Println("register http finish!")
 }
 
 type FastHttp struct {

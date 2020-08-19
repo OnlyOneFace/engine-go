@@ -8,10 +8,13 @@ package main
 
 import (
 	"engine-go/base"
+	"engine-go/impl/client"
 	"engine-go/impl/logger"
 )
 
 func main() {
+	client.SayHello()
+	
 	cn := NewCaseName()
 	// 日志设置
 	for _, value := range base.Clients {

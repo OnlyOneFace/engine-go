@@ -29,13 +29,21 @@ func (c *CaseName) SetBase(v *base.BaseCase) {
 }
 
 func (c *CaseName) Setup() {
-	c.Clients[base.Http].Exec(nil)
+	aw := base.NewAWResult()
+	client := c.Clients[base.Http]
+	client.Exec(aw)
+	client.Info("setup")
+	aw.Release()
 }
 
 func (c *CaseName) Test() {
-	c.Clients[base.Http].Exec(nil)
+	aw := base.NewAWResult()
+	c.Clients[base.Http].Exec(aw)
+	aw.Release()
 }
 
 func (c *CaseName) TearDown() {
-	c.Clients[base.Http].Exec(nil)
+	aw := base.NewAWResult()
+	c.Clients[base.Http].Exec(aw)
+	aw.Release()
 }

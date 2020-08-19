@@ -33,6 +33,7 @@ type BaseCase struct { // 底层结构
 // 协议接口
 type Client interface {
 	SetLogger(Logger)
+	Logger
 	Exec(*AWResult)
 }
 

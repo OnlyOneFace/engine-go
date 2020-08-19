@@ -33,7 +33,8 @@ func NewZap(level string, encoderFunc Encoder, w zapcore.WriteSyncer, fields ...
 		newLevel(level),
 	).With(fields) //自带node 信息
 	//大于error增加堆栈信息
-	return zap.New(core).WithOptions(zap.AddCaller(), zap.AddStacktrace(zapcore.DPanicLevel))
+	return zap.New(core).WithOptions(zap.AddCaller(), zap.AddCallerSkip(1),
+		zap.AddStacktrace(zapcore.DPanicLevel))
 }
 
 func newEncoderConfig() zapcore.EncoderConfig {
