@@ -6,8 +6,8 @@
 // Package client 
 package client
 
-import "fmt"
+import "log"
 
-func SayHello() {
-	fmt.Println("you can work")
+func Register() {
+	log.Println("work start...")
 }

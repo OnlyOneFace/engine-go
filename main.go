@@ -13,8 +13,8 @@ import (
 )
 
 func main() {
-	client.SayHello()
-	
+	client.Register()
+
 	cn := NewCaseName()
 	// 日志设置
 	for _, value := range base.Clients {
