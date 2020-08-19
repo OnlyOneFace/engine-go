@@ -18,23 +18,25 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-func NewZapLogger(level string, enableDebugLog bool) *ZapLogger {
-	var w io.Writer
+func SetWriter(enableDebugLog bool) io.Writer {
 	if enableDebugLog {
-		w = os.Stdout
-	} else {
-		w = &lumberjack.Logger{
-			Filename:   fmt.Sprintf("./logs/debug_go.%s.log", time.Now().Format("2006-01-02")),
-			MaxSize:    5, //单个日志文件最大MaxSize*M大小 // megabytes
-			MaxBackups: 5, // 保存历史日志文件的最大个数
-			MaxAge:     2, //days
-			Compress:   false,
-		}
+		return os.Stdout
 	}
+	return &lumberjack.Logger{
+		Filename:   fmt.Sprintf("./logs/debug_go.%s.log", time.Now().Format("2006-01-02")),
+		MaxSize:    5, //单个日志文件最大MaxSize*M大小 // megabytes
+		MaxBackups: 5, // 保存历史日志文件的最大个数
+		MaxAge:     2, //days
+		Compress:   false,
+	}
+}
+
+func NewZapLogger(level string, enableDebugLog bool) *ZapLogger {
 	return &ZapLogger{
 		NewZap(
 			strings.ToLower(level),
-			zapcore.NewConsoleEncoder, zapcore.AddSync(w),
+			zapcore.NewConsoleEncoder,
+			zapcore.AddSync(SetWriter(enableDebugLog)),
 		),
 	}
 }
