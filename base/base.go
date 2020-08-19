@@ -27,12 +27,10 @@ type Client interface {
 
 // 日志接口
 type Logger interface {
-	Debug(v ...interface{})
+	Debug(format string)
 	Debugf(format string, v ...interface{})
-	Info(v ...interface{})
+	Info(format string)
 	Infof(format string, v ...interface{})
-	Error(v ...interface{})
+	Error(format string)
 	Errorf(format string, v ...interface{})
 }
-
-
