@@ -6,6 +6,16 @@
 // Package engine_go 
 package main
 
-func main()  {
-	
+import "engine-go/base"
+
+func main() {
+	cn := NewCaseName()
+	var basins = &base.BaseCase{}
+	cn.SetBase(basins)
+
+	cn.Setup()
+
+	cn.Test()
+
+	cn.TearDown()
 }
