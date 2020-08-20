@@ -4,7 +4,7 @@
 // Create: 2020/8/19
 
 // Package main 
-package main
+package conf
 
 import "engine-go/base"
 
