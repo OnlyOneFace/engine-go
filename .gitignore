@@ -1,3 +1,4 @@
+.idea
 engine-go*
 go.sum
 logs
