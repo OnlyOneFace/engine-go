@@ -10,9 +10,9 @@ import (
 	"log"
 	"plugin"
 
-	"engine-go/base"
-	"engine-go/impl/client"
-	"engine-go/impl/logger"
+	"github.com/OnlyOneFace/engine-go/base"
+	"github.com/OnlyOneFace/engine-go/impl/client"
+	"github.com/OnlyOneFace/engine-go/impl/logger"
 )
 
 func main() {

@@ -6,7 +6,7 @@
 // Package main 
 package conf
 
-import "engine-go/base"
+import "github.com/OnlyOneFace/engine-go/base"
 
 func NewCaseName() base.PluginFunc {
 	return new(CaseName)

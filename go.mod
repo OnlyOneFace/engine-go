@@ -1,4 +1,4 @@
-module engine-go
+module github.com/OnlyOneFace/engine-go
 
 go 1.15
 

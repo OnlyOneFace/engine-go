@@ -15,9 +15,9 @@ import (
 
 	"github.com/valyala/fasthttp"
 
-	"engine-go/base"
-	"engine-go/impl/logger"
-	"engine-go/util"
+	"github.com/OnlyOneFace/engine-go/base"
+	"github.com/OnlyOneFace/engine-go/impl/logger"
+	"github.com/OnlyOneFace/engine-go/util"
 )
 
 //插件最终包含的是base
