@@ -8,15 +8,7 @@ package main
 
 import "engine-go/base"
 
-// 插件系统的解析对接接口
-type PluginFunc interface {
-	SetBase(*base.BaseCase)
-	Setup()
-	Test()
-	TearDown()
-}
-
-func NewCaseName() PluginFunc {
+func NewCaseName() base.PluginFunc {
 	return new(CaseName)
 }
 

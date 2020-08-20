@@ -46,3 +46,11 @@ type Logger interface {
 	Error(format string)
 	Errorf(format string, v ...interface{})
 }
+
+// 插件系统的解析对接接口
+type PluginFunc interface {
+	SetBase(*BaseCase)
+	Setup()
+	Test()
+	TearDown()
+}

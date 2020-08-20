@@ -7,6 +7,9 @@
 package main
 
 import (
+	"log"
+	"plugin"
+
 	"engine-go/base"
 	"engine-go/impl/client"
 	"engine-go/impl/logger"
@@ -14,7 +17,15 @@ import (
 
 func main() {
 	client.Register()
-	cn := NewCaseName()
+	pluginFile, err := plugin.Open("caseName.so")
+	if err != nil {
+		log.Fatal(err)
+	}
+	var symbol plugin.Symbol
+	if symbol, err = pluginFile.Lookup("NewCaseName"); err != nil {
+		log.Fatal(err)
+	}
+	cn := symbol.(func() base.PluginFunc)()
 	// 日志设置
 	for _, value := range base.Clients {
 		value.SetLogger(logger.NewZapLogger("Info", true))
