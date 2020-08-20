@@ -17,7 +17,7 @@ import (
 
 func main() {
 	client.Register()
-	pluginFile, err := plugin.Open("caseName.so")
+	pluginFile, err := plugin.Open("./CaseName.so")
 	if err != nil {
 		log.Fatal(err)
 	}
