@@ -4,7 +4,7 @@
 // Create: 2020/8/19
 
 // Package main 
-package conf
+package main
 
 import "github.com/OnlyOneFace/engine-go/base"
 
